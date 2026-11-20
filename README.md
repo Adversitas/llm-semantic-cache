@@ -123,8 +123,12 @@ from semcache.llm import LocalLLM
 
 verifier = LocalLLM("Qwen/Qwen2.5-1.5B-Instruct")
 cache = SemanticCache(
-    TransformerEmbedder(), accept=1.0, verify_low=0.998,  # policy picked on dev for 95 % precision
-    verifier=verifier.verifier(threshold=0.8), ttl_s=24 * 3600, capacity=50_000,
+    TransformerEmbedder(),
+    accept=1.0,
+    verify_low=0.998,  # policy picked on dev for 95 % precision
+    verifier=verifier.verifier(threshold=0.8),
+    ttl_s=24 * 3600,
+    capacity=50_000,
 )
 answer, lookup = cache.get_or_call(question, call_llm, namespace=f"{tenant}:{prompt_version}")
 ```
