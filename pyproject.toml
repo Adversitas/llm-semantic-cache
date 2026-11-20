@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "semcache"
+version = "0.1.0"
+description = "A semantic response cache for LLM applications (exact + embedding match, namespaces, TTL, LRU, LLM verifier for the gray zone), measured on French PAWS-X and STS-B for hit rate vs wrong-answer rate."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.24", "pandas>=2.0", "scikit-learn>=1.3", "scipy>=1.10"]
+
+[project.optional-dependencies]
+models = ["torch>=2.2", "transformers>=4.45"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+semcache = "semcache.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/semcache"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
